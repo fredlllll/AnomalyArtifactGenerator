@@ -1,5 +1,5 @@
 ﻿HealthRestoreSpeed,-0.00060, 0.00060, 5
-RadiationRestoreSpeed,-0.00060, 0.00060, 7
+RadiationRestoreSpeed,-0.00060, 0.00060, 5
 SatietyRestoreSpeed,-0.1, 0.1, 3
 PowerRestoreSpeed,-0.0005, 0.0005, 3
 BleedingRestoreSpeed,-0.001, 0.001, 3

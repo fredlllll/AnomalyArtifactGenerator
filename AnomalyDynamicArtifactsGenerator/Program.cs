@@ -13,7 +13,7 @@ namespace AnomalyDynamicArtifactsGenerator
             ArtifactGenerator gen = new ArtifactGenerator("PropertyStats.txt");
 
             var arts = gen.GetArtifacts(4);
-            arts = arts.Where((a) => { return Util.r.NextDouble() > 0.66; });
+            arts = arts.Where((a) => { return Util.r.NextDouble() > 0.9; }).ToArray(); //to array to only evaluate once
 
             var itemsFileGen = new ItemsFileGenerator("gamedata\\configs\\items\\items\\items_dynart.ltx");
             itemsFileGen.Write(arts);
