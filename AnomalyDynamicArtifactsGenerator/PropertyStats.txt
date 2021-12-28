@@ -1,0 +1,15 @@
+﻿HealthRestoreSpeed,-0.00060, 0.00060, 5
+RadiationRestoreSpeed,-0.00060, 0.00060, 7
+SatietyRestoreSpeed,-0.1, 0.1, 3
+PowerRestoreSpeed,-0.0005, 0.0005, 3
+BleedingRestoreSpeed,-0.001, 0.001, 3
+AdditionalInventoryCarryWeight,-12, 12, 3
+BurnImmunity,-0.002,0.002,3
+StrikeImmunity,-0.002,0.002,3
+ShockImmunity,-0.002,0.002,3
+WoundImmunity,-0.002,0.002,3
+RadiationImmunity,-0.002,0.002,3
+TelepaticImmunity,-0.002,0.002,3
+ChemicalBurnImmunity,-0.002,0.002,3
+ExplosionImmunity,-0.002,0.002,3
+FireWoundImmunity,-0.002,0.002,3

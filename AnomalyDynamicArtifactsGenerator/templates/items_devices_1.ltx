@@ -1,0 +1,373 @@
+﻿
+;;--===========================================
+;;--================| Devices |================
+;;--===========================================
+
+
+[tch_device]	;;-- (base)
+kind								                   = i_device
+class                                                  = II_ATTCH
+script_binding                                         = item_device.bind
+use_condition                            		       = true
+auto_attach                                            = false 
+allow_repair                             		       = false
+anim_item                                              = false
+release_on_first_update							       = false
+
+power_critical							 		       = 0.05
+condition_bar									       = power_progess_bar
+use2_functor                					       = item_device.menu_battery
+use2_action_functor         					       = item_device.func_battery
+
+[tch_detector]:identity_immunities,tch_device
+GroupControlSection                                    = spawn_group
+$spawn                                                 = "devices\detector_simple"
+$prefetch                                              = 32
+class                                                  = DET_SIMP
+cform                                                  = skeleton
+visual                                                 = dynamics\devices\dev_detector_1\dev_detector_1.ogf
+hud                                                    = detector_simple_hud
+animation_slot                                         = 7
+inv_name                                               = st_detector1
+inv_name_short                                         = st_detector1
+description                                            = st_detector1_descr
+slot                                                   = 8
+ef_detector_type                                       = 1
+inv_weight                                             = 0.44
+inv_grid_width                                         = 1
+inv_grid_height                                        = 1
+inv_grid_x                                             = 2
+inv_grid_y                                             = 5
+cost                                                   = 100
+default_to_ruck                                        = true
+af_radius			                                   = 0
+af_vis_radius		                                   = 0
+tier                                                   = 1
+
+attach_angle_offset                                    = -1.303,-1.493,-1.202
+attach_position_offset                                 = 0.110,-0.019,0.000
+attach_bone_name                                       = bip01_l_hand
+auto_attach                                            = false
+snd_draw                                               = weapons\detector\detector_draw
+snd_holster                                            = weapons\detector\detector_holster
+
+particles_enabled                                      = false
+hud_particles_enabled                                  = false
+particles                                              = none
+particles_bone                                         = bone01
+
+
+;;--==========================< PDA >=============================
+[device_pda_1]:device_pda,tch_device
+GroupControlSection                                    = spawn_group
+discovery_dependency                                   =
+$spawn                                                 = "devices\pda"
+$prefetch                                              = 16
+class                                                  = D_PDA
+cform                                                  = skeleton
+visual                                                 = dynamics\devices\dev_pda\dev_pda.ogf
+description                                            = st_pda_1_descr
+radius                                                 = 68	
+slot                                                   = 7
+hud                                      			   = device_pda_1_hud
+default_to_ruck                          		       = true ;false
+sprint_allowed                                         = true
+control_inertion_factor                                = 1
+animation_slot             							   = 13
+; script_binding                                       = bind_physic_object.init
+inv_name                                               = st_pda_1_name
+inv_name_short                                         = st_pda_1_name
+inv_weight                                             = 0.1
+inv_grid_width                                         = 1
+inv_grid_height                                        = 1
+inv_grid_x                                             = 4
+inv_grid_y                                             = 27
+upgr_icon_path								           = ui\actor_items\ui_actor_items_1
+upgr_icon_x								 	           = 150
+upgr_icon_y								 	           = 0
+upgr_icon_width						 	 	           = 150
+upgr_icon_height						 	           = 100
+cost                                                   = 4000
+attach_angle_offset                                    = -1.303,0.107,-1.702
+attach_position_offset                                 = 0.14,0.001,0.02
+attach_bone_name                                       = bip01_l_hand
+auto_attach                                            = false
+tier                                                   = 2
+hud_fov												   = 0.45
+
+[device_pda_1_hud]:pda_hud
+item_visual                                            = dynamics\devices\dev_pda\dev_pda_green_hud.ogf
+
+;------------------------
+[device_pda_2]:device_pda_1
+visual                                                 = dynamics\devices\dev_pda\dev_pda_2.ogf
+radius                                                 = 120
+inv_grid_x                                             = 5
+cost                                                   = 25000
+description                                            = st_pda_2_descr
+inv_name                                               = st_pda_2_name
+inv_name_short                                         = st_pda_2_name
+tier                                                   = 4
+hud                                      			   = device_pda_2_hud
+
+[device_pda_2_hud]:pda_hud
+item_visual                                            = dynamics\devices\dev_pda\dev_pda_blue_hud.ogf
+
+;------------------------
+[device_pda_3]:device_pda_1
+visual                                                 = dynamics\devices\dev_pda\dev_pda_3.ogf
+radius                                                 = 240
+inv_grid_x                                             = 6
+cost                                                   = 50000
+description                                            = st_pda_3_descr
+inv_name                                               = st_pda_3_name
+inv_name_short                                         = st_pda_3_name
+tier                                                   = 5
+hud                                      			   = device_pda_3_hud
+
+[device_pda_3_hud]:pda_hud
+item_visual                                            = dynamics\devices\dev_pda\dev_pda_black_hud.ogf
+
+;;--==========================< common PDA and Flashdrives >=============================
+[itm_pda_common]:device_pda_1
+description                                            = st_pda_mlr_descr
+inv_name                                               = st_pda_name
+inv_name_short                                         = st_pda_name
+inv_weight                                             = 0.1
+inv_grid_width                                         = 1
+inv_grid_height                                        = 1
+inv_grid_x                                             = 7
+inv_grid_y                                             = 3
+cost                                                   = 0
+use1_functor                					       = ui_pda_npc_tab.menu_view
+use1_action_functor         					       = ui_pda_npc_tab.use_view
+
+[itm_pda_uncommon]:itm_pda_common
+
+[itm_pda_rare]:itm_pda_uncommon
+
+;-- (not used)
+[itm_guide_usb_1]:booster
+can_trade                                              = false
+description                                            = st_pda_descr
+inv_grid_x                                             = 8
+inv_grid_y                                             = 3
+inv_name                                               = st_memory_stick_name
+inv_name_short                                         = st_memory_stick_name
+class                                                  = II_FOOD
+kind								                   = i_device
+
+[itm_guide_usb_2]:booster
+can_trade                                              = false
+description                                            = st_pda_descr
+inv_grid_x                                             = 9
+inv_grid_y                                             = 3
+inv_name                                               = st_memory_stick_name
+inv_name_short                                         = st_memory_stick_name
+class                                                  = II_FOOD
+kind								                   = i_device
+
+
+;;--==========================< Detectors >=============================
+[detector_base_hud]:hud_base
+attach_place_idx		                               = 1
+
+;--from beretta
+hands_position			                               = 0.05,-0.1895,-0.1
+hands_orientation		                               = 2,2,0
+hands_position_16x9		                               = 0.05,-0.1895,-0.1
+hands_orientation_16x9	                               = 2,2,0
+
+aim_hud_offset_pos         							   = -0.175, 0.065, 0.06
+aim_hud_offset_pos_16x9								   = -0.175, 0.065, 0.06
+aim_hud_offset_rot          						   = 0.0005, 0.09, -0.015
+aim_hud_offset_rot_16x9     						   = 0.0005, 0.09, -0.015
+
+gl_hud_offset_pos			                           = 0,0,0
+gl_hud_offset_rot			                           = 0,0,0
+
+lean_hud_offset_pos		                               = 0,0,0
+lean_hud_offset_rot		                               = 0,0,0
+
+freelook_z_offset_mul								   = 0.1
+
+
+;;--======< Echo detector >======--
+[detector_simple]:identity_immunities,tch_device
+GroupControlSection	                                   = spawn_group
+$spawn 			                                       = "devices\detector_simple"
+$prefetch 		                                       = 32
+class			                                       = DET_SIMP
+cform			                                       = skeleton
+visual			                                       = dynamics\devices\dev_detector_1\dev_detector_1.ogf
+hud			                                           = detector_simple_hud
+animation_slot		                                   = 7
+inv_name		                                       = st_detector1
+inv_name_short	                                       = st_detector1
+description		                                       = st_detector1_descr
+slot			                                       = 8
+ef_detector_type	                                   = 1
+inv_weight		                                       = 0.44
+inv_grid_width		                                   = 1
+inv_grid_height		                                   = 1
+inv_grid_x		                                       = 8
+inv_grid_y		                                       = 27
+upgr_icon_path								           = ui\actor_items\ui_actor_items_1
+upgr_icon_x								 	           = 150
+upgr_icon_y								 	           = 600
+upgr_icon_width						 	 	           = 150
+upgr_icon_height						 	           = 100
+cost			                                       = 3460
+default_to_ruck		                                   = true
+af_radius		                                       = 30
+af_vis_radius		                                   = 3
+tier                                                   = 2
+
+----------------(Rank 0 \ Junk)
+af_class_1		                                       = af_dragon_eye
+af_sound_1_		                                       = detectors\art_beep1
+af_freq_1		                                       = 0.05, 2
+
+af_class_2		                                       = af_fire_loop
+af_sound_2_		                                       = detectors\art_beep1
+af_freq_2		                                       = 0.05, 2
+
+af_class_3		                                       = af_ball
+af_sound_3_		                                       = detectors\art_beep1
+af_freq_3		                                       = 0.05, 2
+
+af_class_4		                                       = af_fonar
+af_sound_4_		                                       = detectors\art_beep1
+af_freq_4		                                       = 0.05, 2
+
+af_class_5		                                       = af_tapeworm
+af_sound_5_		                                       = detectors\art_beep1
+af_freq_5		                                       = 0.05, 2
+
+af_class_6		                                       = af_moh
+af_sound_6_		                                       = detectors\art_beep1
+af_freq_6		                                       = 0.05, 2
+
+af_class_7		                                       = af_serofim
+af_sound_7_		                                       = detectors\art_beep1
+af_freq_7		                                       = 0.05, 2
+
+af_class_8		                                       = af_elektron
+af_sound_8_		                                       = detectors\art_beep1
+af_freq_8		                                       = 0.05, 2
+
+af_class_9		                                       = af_kogot
+af_sound_9_		                                       = detectors\art_beep1
+af_freq_9		                                       = 0.05, 2
+
+af_class_10		                                       = af_generator
+af_sound_10_		                                   = detectors\art_beep1
+af_freq_10		                                       = 0.05, 2
+
+af_class_11		                                       = af_black_angel
+af_sound_11_		                                   = detectors\art_beep1
+af_freq_11		                                       = 0.05, 2
+
+af_class_19		                                       = af_grapes
+af_sound_19_		                                   = detectors\art_beep1
+af_freq_19		                                       = 0.05, 2
+
+af_class_20		                                       = af_skull_miser
+af_sound_20_		                                   = detectors\art_beep1
+af_freq_20		                                       = 0.05, 2
+
+af_class_21		                                       = af_star_phantom
+af_sound_21_		                                   = detectors\art_beep1
+af_freq_21		                                       = 0.05, 2
+
+af_class_22		                                       = af_medallion
+af_sound_22_		                                   = detectors\art_beep1
+af_freq_22		                                       = 0.05, 2
+
+af_class_23		                                       = af_peas
+af_sound_23_		                                   = detectors\art_beep1
+af_freq_23		                                       = 0.05, 2
+
+af_class_24		                                       = af_kislushka
+af_sound_24_		                                   = detectors\art_beep1
+af_freq_24		                                       = 0.05, 2
+
+af_class_25		                                       = af_zhelch
+af_sound_25_		                                   = detectors\art_beep1
+af_freq_25		                                       = 0.05, 2
+
+af_class_26		                                       = af_sandstone
+af_sound_26_		                                   = detectors\art_beep1
+af_freq_26		                                       = 0.05, 2
+
+af_class_12		                                       = af_fountain
+af_sound_12_		                                   = detectors\art_beep1
+af_freq_12		                                       = 0.05, 2
+
+af_class_13		                                       = af_spaika
+af_sound_13_		                                   = detectors\art_beep1
+af_freq_13		                                       = 0.05, 2
+
+af_class_14		                                       = af_signet
+af_sound_14_		                                   = detectors\art_beep1
+af_freq_14		                                       = 0.05, 2
+
+af_class_15		                                       = af_repei
+af_sound_15_		                                   = detectors\art_beep1
+af_freq_15		                                       = 0.05, 2
+
+af_class_16		                                       = af_bat
+af_sound_16_		                                   = detectors\art_beep1
+af_freq_16		                                       = 0.05, 2
+
+af_class_17		                                       = af_sun
+af_sound_17_		                                   = detectors\art_beep1
+af_freq_17		                                       = 0.05, 2
+
+af_class_18		                                       = af_ear
+af_sound_18_		                                   = detectors\art_beep1
+af_freq_18		                                       = 0.05, 2
+
+af_class_27		                                       = af_chelust
+af_sound_27_		                                   = detectors\art_beep1
+af_freq_27		                                       = 0.05, 2
+
+af_class_28		                                       = af_atom
+af_sound_28_	                                       = detectors\art_beep1
+af_freq_28		                                       = 0.05, 2
+
+af_class_29		                                       = af_lighthouse
+af_sound_29_	                                       = detectors\art_beep1
+af_freq_29		                                       = 0.05, 2
+
+af_class_30		                                       = af_cell
+af_sound_30_	                                       = detectors\art_beep1
+af_freq_30		                                       = 0.05, 2
+
+af_class_31		                                       = af_cocoon
+af_sound_31_	                                       = detectors\art_beep1
+af_freq_31		                                       = 0.05, 2
+
+
+----------------(Special)
+af_class_32		                                       = jup_b1_half_artifact
+af_sound_32_	                                       = detectors\art_beep1
+af_freq_32		                                       = 0.05, 2
+
+;af_class_33		                                   = af_quest_b14_twisted
+;af_sound_33_	                                       = detectors\art_beep1
+;af_freq_33		                                       = 0.05, 2
+
+af_class_33		                                       = af_monolith
+af_sound_33_	                                       = detectors\art_beep1
+af_freq_33		                                       = 0.05, 2
+
+af_class_34		                                       = af_compass
+af_sound_34_	                                       = detectors\art_beep1
+af_freq_34		                                       = 0.05, 2
+
+af_class_35		                                       = af_oasis_heart
+af_sound_35_	                                       = detectors\art_beep1
+af_freq_35		                                       = 0.05, 2
+
+----------------(Rank 1)

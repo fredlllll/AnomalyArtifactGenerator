@@ -1,0 +1,55 @@
+﻿
+
+[detector_advanced_hud]:detector_base_hud
+item_position				                           = -0.078949,0.039172,-0.019197
+item_orientation			                           = 320.606964,-194.089020,-186.572464
+
+item_visual                   	                       = dynamics\devices\dev_detector_2\dev_detector_2_hud
+
+anm_show				                               = d2_draw, draw
+anm_show_fast			                               = d2_draw, draw, 1.5
+anm_hide				                               = d2_holster, holster
+anm_hide_fast			                               = d2_holster, holster, 1.5
+anm_idle				                               = d2_idle, idle
+anm_idle_moving			                               = d2_move, move
+anm_idle_moving_crouch	                               = d2_crouch, move
+anm_idle_sprint			                               = d2_sprint, sprint
+
+anm_idle_zoom										   = d2_zoom, idle
+anm_zoom								               = d2_zoom_in, idle
+anm_zoom_show							               = d2_zoom_draw, idle, 1.5
+anm_zoom_hide							               = d2_zoom_holster, idle, 1.5
+anm_zoom_hide_fast						               = d2_zoom_holster, idle, 2
+
+anm_throw_start										   = d2_throw_start, idle
+anm_throw											   = d2_throw_idle, idle
+anm_throw_end										   = d2_throw_end, idle
+
+;;--======< Veles detector >======--
+[detector_elite]:detector_advanced
+$spawn 			                                       = "devices\detector_elite"
+class			                                       = DET_ELIT
+visual			                                       = dynamics\devices\dev_detector_3\dev_detector_3.ogf
+inv_name		                                       = st_detector3
+inv_name_short	                                       = st_detector3
+description		                                       = st_detector3_descr
+hud			                                           = detector_elite_hud
+inv_weight		                                       = 0.29
+inv_grid_width		                                   = 1
+inv_grid_height		                                   = 1
+inv_grid_x		                                       = 10
+inv_grid_y		                                       = 27
+upgr_icon_path								           = ui\actor_items\ui_actor_items_1
+upgr_icon_x								 	           = 150
+upgr_icon_y								 	           = 400
+upgr_icon_width						 	 	           = 150
+upgr_icon_height						 	           = 100
+cost			                                       = 46880
+; elite x                                              ="0.00096" y="0.0035"
+ui_p			                                       = -0.02904,0.01,0.0364
+ui_r			                                       = 0,90,0
+af_radius		                                       = 30
+af_vis_radius		                                   = 5
+tier                                                   = 4
+
+----------------(Rank 3)
