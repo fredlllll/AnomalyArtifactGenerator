@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace AnomalyDynamicArtifactsGenerator
 {
     public class Artifact : IEquatable<Artifact>
     {
-        private static int idCounter = Util.r.Next(56789, 156789);
+        private static int idCounter = 100000;
+        private static int nameIdCounter = Util.r.Next(56789, 156789);
 
         private static readonly ArtifactType[] artifactTypes = {
             ArtifactType.Gravi,
@@ -56,19 +56,12 @@ namespace AnomalyDynamicArtifactsGenerator
             }
         }
 
-        public string NameId
-        {
-            get
-            {
-                return StringDb.GetString(Name);
-            }
-        }
 
         public string Name
         {
             get
             {
-                return "Artifact " + ID;
+                return "Artifact " + NameID;
 
                 //debug name:
                 /*string name = "genArt_";
@@ -81,15 +74,28 @@ namespace AnomalyDynamicArtifactsGenerator
             }
         }
 
-        private int id = 0;
+        private int nameId = -1;
+        public int NameID
+        {
+            get
+            {
+                if (nameId < 0)
+                {
+                    nameId = nameIdCounter;
+                    nameIdCounter += Util.r.Next(333, 999);
+                }
+                return nameId;
+            }
+        }
+
+        private int id = -1;
         public string ID
         {
             get
             {
-                if (id == 0)
+                if (id < 0)
                 {
-                    id = idCounter;
-                    idCounter += Util.r.Next(333, 999);
+                    id = idCounter++;
                 }
                 return id.ToString();
             }

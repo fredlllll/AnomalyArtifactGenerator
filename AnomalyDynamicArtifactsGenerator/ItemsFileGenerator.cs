@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace AnomalyDynamicArtifactsGenerator
 {
@@ -61,7 +60,7 @@ namespace AnomalyDynamicArtifactsGenerator
         {
             //write artifact 
             string name = a.Name;
-            string nameId = a.NameId;
+            string nameId = StringDb.GetString(name);
             string id = a.ID;
 
             targetWriter.WriteLine("[af_" + id + "]:af_base");
@@ -72,8 +71,8 @@ namespace AnomalyDynamicArtifactsGenerator
             targetWriter.WriteLine("inv_name = " + nameId);
             targetWriter.WriteLine("inv_name_short = " + nameId);
             targetWriter.WriteLine("description = " + StringDb.GetString("One of many artifacts that can be found in the zone"));
-            targetWriter.WriteLine("inv_grid_x = "+a.Graphics.inv_x);
-            targetWriter.WriteLine("inv_grid_y = "+a.Graphics.inv_y);
+            targetWriter.WriteLine("inv_grid_x = " + a.Graphics.inv_x);
+            targetWriter.WriteLine("inv_grid_y = " + a.Graphics.inv_y);
             targetWriter.WriteLine("cost = " + a.Cost);
             targetWriter.WriteLine("jump_height = 0"); //guess how much it bounces around when on ground?
             targetWriter.WriteLine("inv_weight = " + str(a.Weight));

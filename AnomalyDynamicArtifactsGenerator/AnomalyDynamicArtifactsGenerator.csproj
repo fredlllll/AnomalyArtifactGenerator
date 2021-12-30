@@ -6,6 +6,10 @@
     <StartupObject>AnomalyDynamicArtifactsGenerator.Program</StartupObject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="PropertyStats.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
