@@ -7,7 +7,7 @@ namespace AnomalyDynamicArtifactsGenerator
 {
     public class ArtifactGenerator
     {
-        private readonly List<ArtifactPropertyStats> properties = new List<ArtifactPropertyStats>();
+        private readonly List<IArtifactPropertyStats> properties = new List<IArtifactPropertyStats>();
 
         public ArtifactGenerator(string propertyStatsFile)
         {
@@ -25,17 +25,28 @@ namespace AnomalyDynamicArtifactsGenerator
 
                     var parts = line.Split(',');
 
-                    if (parts.Length != 4)
+                    IArtifactPropertyStats aps;
+                    var name = parts[0];
+                    if (name.EndsWith("[]"))
                     {
-                        Console.WriteLine("cant parse this shit: " + line);
-                        continue;
-                    }
+                        name = name.Substring(0, name.Length - 2);
 
-                    ArtifactPropertyStats aps = new ArtifactPropertyStats((ArtifactProperty)Enum.Parse(typeof(ArtifactProperty), parts[0]),
+                        List<float> vals = new List<float>();
+                        for (int i = 1; i < parts.Length; ++i)
+                        {
+                            vals.Add(float.Parse(parts[i], System.Globalization.CultureInfo.InvariantCulture));
+                        }
+
+                        aps = new ArtifactPropertyStatsList((ArtifactProperty)Enum.Parse(typeof(ArtifactProperty), name), vals.ToArray());
+                    }
+                    else
+                    {
+                        aps = new ArtifactPropertyStats((ArtifactProperty)Enum.Parse(typeof(ArtifactProperty), name),
                         float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture),
                         float.Parse(parts[2], System.Globalization.CultureInfo.InvariantCulture),
                         int.Parse(parts[3])
                         );
+                    }
                     properties.Add(aps);
                 }
             }
@@ -43,8 +54,6 @@ namespace AnomalyDynamicArtifactsGenerator
 
         public IEnumerable<Artifact> GetArtifacts(int props = 3)
         {
-            List<Artifact> artifacts = new List<Artifact>();
-
             var propList = NOverK.Combinations(properties, props);
 
             foreach (var properties in propList)
@@ -56,10 +65,11 @@ namespace AnomalyDynamicArtifactsGenerator
                     av.properties.Add(p);
                 }
 
-                artifacts.AddRange(av.GetArtifacts());
+                foreach (var a in av.GetArtifacts())
+                {
+                    yield return a;
+                }
             }
-
-            return artifacts;
         }
     }
 }

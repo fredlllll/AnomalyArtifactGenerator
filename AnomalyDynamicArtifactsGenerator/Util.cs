@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AnomalyDynamicArtifactsGenerator
@@ -27,6 +28,15 @@ namespace AnomalyDynamicArtifactsGenerator
             }
             // use relative error
             return diff / (absA + absB) < epsilon;
+        }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> list)
+        {
+            /*return list.Select(x => new { Number = r.Next(), Item = x }).
+                     OrderBy(x => x.Number).
+                     Select(x => x.Item);*/
+
+            return list.OrderBy(x => Util.r.NextDouble()); //apparently it caches this internally, so the above is just a waste of memory and time
         }
     }
 }

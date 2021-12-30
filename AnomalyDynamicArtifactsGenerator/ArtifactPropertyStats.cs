@@ -4,28 +4,28 @@ using System.Text;
 
 namespace AnomalyDynamicArtifactsGenerator
 {
-    public class ArtifactPropertyStats
+    public class ArtifactPropertyStats : IArtifactPropertyStats
     {
-        public readonly ArtifactProperty artifactProperty;
+        public ArtifactProperty ArtifactProperty { get; }
+        public int Steps { get; }
         public readonly float min, max;
-        public readonly int steps;
-        private float diff;
+        private readonly float diff;
 
         public ArtifactPropertyStats(ArtifactProperty artifactProperty, float min, float max, int steps)
         {
-            this.artifactProperty = artifactProperty;
+            ArtifactProperty = artifactProperty;
             this.min = min;
             this.max = max;
-            this.steps = steps;
+            Steps = steps;
 
-            diff = (max - min) / (steps-1);
+            diff = (max - min) / (steps - 1);
         }
 
         public float GetValue(int index)
         {
-            if (index < 0 || index >= this.steps)
+            if (index < 0 || index >= this.Steps)
             {
-                throw new IndexOutOfRangeException("index is out of range, has to be [0," + (steps - 1) + "]");
+                throw new IndexOutOfRangeException("index is out of range, has to be [0," + (Steps - 1) + "]");
             }
             return this.min + diff * index;
         }

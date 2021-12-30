@@ -50,7 +50,7 @@ namespace AnomalyDynamicArtifactsGenerator
                 return "0";
             }*/
             var ret = val.ToString("F8", System.Globalization.CultureInfo.InvariantCulture).TrimEnd('0').TrimEnd('.');
-            if(!ret.Contains('.'))
+            if (!ret.Contains('.'))
             {
                 ret = ret += ".0";
             }
@@ -61,30 +61,53 @@ namespace AnomalyDynamicArtifactsGenerator
         {
             //write artifact 
             string name = a.Name;
+            string nameId = a.NameId;
             string id = a.ID;
 
             targetWriter.WriteLine("[af_" + id + "]:af_base");
-            targetWriter.WriteLine("$spawn = \"artefacts\\artefact_death_lamp\""); //guess this is the 3d model used for it?
+            targetWriter.WriteLine("$spawn = " + a.Graphics.spawn); //no fuckin idea
             targetWriter.WriteLine("kind = i_arty");
             targetWriter.WriteLine("class = ARTEFACT");
-            targetWriter.WriteLine(@"visual = dynamics\artefacts\artefact_death_lamp.ogf");
-            targetWriter.WriteLine("inv_name = " + name);
-            targetWriter.WriteLine("inv_name_short = " + name);
-            targetWriter.WriteLine("description = idk what the fuck  this is");
-            targetWriter.WriteLine("inv_grid_x = 20"); //no idea if i have to actually count this up or if it will just add them all after each other or in random order
-            targetWriter.WriteLine("inv_grid_y = 71");
+            targetWriter.WriteLine("visual = " + a.Graphics.visual); //3d model
+            targetWriter.WriteLine("inv_name = " + nameId);
+            targetWriter.WriteLine("inv_name_short = " + nameId);
+            targetWriter.WriteLine("description = " + StringDb.GetString("One of many artifacts that can be found in the zone"));
+            targetWriter.WriteLine("inv_grid_x = "+a.Graphics.inv_x);
+            targetWriter.WriteLine("inv_grid_y = "+a.Graphics.inv_y);
             targetWriter.WriteLine("cost = " + a.Cost);
             targetWriter.WriteLine("jump_height = 0"); //guess how much it bounces around when on ground?
             targetWriter.WriteLine("inv_weight = " + str(a.Weight));
-            targetWriter.WriteLine(@"particles = artefact\af_gravi_idle
+            switch (a.ArtifactType)
+            {
+                case ArtifactType.Gravi:
+                    targetWriter.WriteLine(@"particles = artefact\af_gravi_idle
 det_show_particles = artefact\af_gravi_show
-det_hide_particles = artefact\af_gravi_hide"); //todo change depending on type?
+det_hide_particles = artefact\af_gravi_hide");
+                    break;
+                case ArtifactType.Thermo:
+                    targetWriter.WriteLine(@"particles = artefact\af_thermal_idle
+det_show_particles = artefact\af_thermal_show
+det_hide_particles = artefact\af_thermal_hide");
+                    break;
+                case ArtifactType.Chem:
+                    targetWriter.WriteLine(@"particles = artefact\af_acidic_idle
+det_show_particles = artefact\af_acidic_show
+det_hide_particles = artefact\af_acidic_hide");
+                    break;
+                case ArtifactType.Electro:
+                    targetWriter.WriteLine(@"particles = artefact\af_electra_idle
+det_show_particles = artefact\af_electra_show
+det_hide_particles = artefact\af_electra_hide");
+                    break;
+            }
             targetWriter.WriteLine("af_rank=" + a.Rank);
             targetWriter.WriteLine("tier=" + (a.Rank + 1)); //tier always seems to be 1 higher, idk why there are rank and tier
+            //random light
             targetWriter.WriteLine(@"lights_enabled = true
-trail_light_color = 0.4, 0.4, 0.0
+trail_light_color = " + str((float)Util.r.NextDouble()) + "," + str((float)Util.r.NextDouble()) + "," + str((float)Util.r.NextDouble()) + @"
 trail_light_range = 2.0");
             targetWriter.WriteLine("hit_absorbation_sect = af_" + id + "_absorbation");
+            targetWriter.WriteLine("radiation_restore_speed = " + str(a.RadiationRestoreSpeed));
 
             float value;
             if (a.properties.TryGetValue(ArtifactProperty.AdditionalInventoryCarryWeight, out value))
@@ -103,14 +126,6 @@ trail_light_range = 2.0");
             if (a.properties.TryGetValue(ArtifactProperty.PowerRestoreSpeed, out value))
             {
                 targetWriter.WriteLine("power_restore_speed = " + str(value));
-            }
-            if (a.properties.TryGetValue(ArtifactProperty.RadiationRestoreSpeed, out float radiationRestoreSpeed))
-            {
-                targetWriter.WriteLine("radiation_restore_speed = " + str(value));
-            }
-            else
-            {
-                radiationRestoreSpeed = 0;
             }
             if (a.properties.TryGetValue(ArtifactProperty.SatietyRestoreSpeed, out value))
             {
@@ -131,17 +146,17 @@ trail_light_range = 2.0");
             //write containers
             //aac
 
-            targetWriter.WriteLine("[af_" + a.ID + "_af_aac]:af_" + a.ID + ", af_aac");
+            targetWriter.WriteLine("[af_" + id + "_af_aac]:af_" + id + ", af_aac");
             targetWriter.WriteLine("class = SCRPTART");
             targetWriter.WriteLine("inv_weight=" + str(2.73f + a.Weight));
             targetWriter.WriteLine("cost = 0");
             targetWriter.WriteLine("can_trade = false");
             targetWriter.WriteLine("belt = true");
-            targetWriter.WriteLine("description = uhh aac");
-            targetWriter.WriteLine("inv_name= aac with " + name);
-            targetWriter.WriteLine("inv_name_short = aac with " + name);
-            targetWriter.WriteLine("1icon_layer= af_gimlet");
-            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, radiationRestoreSpeed - 0.00025f)));
+            targetWriter.WriteLine("description = " + StringDb.GetString("AAC with " + name));
+            targetWriter.WriteLine("inv_name = " + StringDb.GetString("AAC with " + name));
+            targetWriter.WriteLine("inv_name_short = " + StringDb.GetString("AAC with " + name));
+            targetWriter.WriteLine("1icon_layer = af_" + id);
+            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, a.RadiationRestoreSpeed - 0.00025f)));
             //iam
             targetWriter.WriteLine("[af_" + id + "_af_iam]:af_" + id + ", af_iam");
             targetWriter.WriteLine("class = SCRPTART");
@@ -149,19 +164,19 @@ trail_light_range = 2.0");
             targetWriter.WriteLine("cost = 0");
             targetWriter.WriteLine("can_trade = false");
             targetWriter.WriteLine("belt = true");
-            targetWriter.WriteLine("description = uhh iam");
-            targetWriter.WriteLine("inv_name= iam with " + name);
-            targetWriter.WriteLine("inv_name_short = iam with " + name);
-            targetWriter.WriteLine("1icon_layer= af_gimlet");
-            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, radiationRestoreSpeed - 0.00013f)));
+            targetWriter.WriteLine("description = " + StringDb.GetString("IAM with " + name));
+            targetWriter.WriteLine("inv_name = " + StringDb.GetString("IAM with " + name));
+            targetWriter.WriteLine("inv_name_short = " + StringDb.GetString("IAM with " + name));
+            targetWriter.WriteLine("1icon_layer= af_" + id);
+            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, a.RadiationRestoreSpeed - 0.00013f)));
             //llmc
             targetWriter.WriteLine("[af_" + id + "_lead_box]:lead_box_closed");
             targetWriter.WriteLine("inv_weight=" + str(2.12f + a.Weight));
-            targetWriter.WriteLine("description = uhh iam");
-            targetWriter.WriteLine("inv_name= iam with " + name);
-            targetWriter.WriteLine("inv_name_short = iam with " + name);
-            targetWriter.WriteLine("1icon_layer= af_gimlet");
-            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, radiationRestoreSpeed - 0.00047f)));
+            targetWriter.WriteLine("description = " + StringDb.GetString("LLMC with " + name));
+            targetWriter.WriteLine("inv_name = " + StringDb.GetString("LLMC with " + name));
+            targetWriter.WriteLine("inv_name_short = " + StringDb.GetString("LLMC with " + name));
+            targetWriter.WriteLine("1icon_layer= af_" + id);
+            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, a.RadiationRestoreSpeed - 0.00047f)));
             //aam
             targetWriter.WriteLine("[af_" + id + "_af_aam]:af_" + id + ", af_aam");
             targetWriter.WriteLine("class = SCRPTART");
@@ -169,11 +184,11 @@ trail_light_range = 2.0");
             targetWriter.WriteLine("cost = 0");
             targetWriter.WriteLine("can_trade = false");
             targetWriter.WriteLine("belt = true");
-            targetWriter.WriteLine("description = uhh aam");
-            targetWriter.WriteLine("inv_name= aam with " + name);
-            targetWriter.WriteLine("inv_name_short = aam with " + name);
-            targetWriter.WriteLine("1icon_layer= af_gimlet");
-            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, radiationRestoreSpeed - 0.00047f)));
+            targetWriter.WriteLine("description = " + StringDb.GetString("AAM with " + name));
+            targetWriter.WriteLine("inv_name = " + StringDb.GetString("AAM with " + name));
+            targetWriter.WriteLine("inv_name_short = " + StringDb.GetString("AAM with " + name));
+            targetWriter.WriteLine("1icon_layer= af_" + id);
+            targetWriter.WriteLine("radiation_restore_speed = " + str(Math.Max(0, a.RadiationRestoreSpeed - 0.00047f)));
             targetWriter.WriteLine();
         }
         public void Write(IEnumerable<Artifact> artifacts)

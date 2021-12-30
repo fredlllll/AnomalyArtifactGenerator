@@ -6,14 +6,41 @@ namespace AnomalyDynamicArtifactsGenerator
 {
     class Program
     {
-
-
         static void Main(string[] args)
         {
             ArtifactGenerator gen = new ArtifactGenerator("PropertyStats.txt");
 
-            var arts = gen.GetArtifacts(4);
-            arts = arts.Where((a) => { return Util.r.NextDouble() > 0.9; }).ToArray(); //to array to only evaluate once
+            var arts5 = Thinners.ThinPercentage(gen.GetArtifacts(5),0.01f).ToArray();
+            var arts4 = Thinners.ThinPercentage(gen.GetArtifacts(4), 0.1f).ToArray();
+            var arts3 = gen.GetArtifacts(3).ToArray();
+            var arts = arts3.Concat(arts4).Concat(arts5);
+            arts = Thinners.ThinPercentageHealthRestore(arts, 0.1f); //remove 90% of artifacts with health restore as its supposed to be rare
+            arts = Thinners.ThinFixed(arts, 4500).ToArray();
+
+            int gravi=0, therm=0, chem=0, elec = 0, other=0;
+            foreach(var a in arts)
+            {
+                switch (a.ArtifactType)
+                {
+                    case ArtifactType.Gravi:
+                        gravi++;
+                        break;
+                    case ArtifactType.Thermo:
+                        therm++;
+                        break;
+                    case ArtifactType.Chem:
+                        chem++;
+                        break;
+                    case ArtifactType.Electro:
+                        elec++;
+                        break;
+                    default:
+                        other++;
+                        break;
+                }
+            }
+
+            Console.WriteLine($"Gravi: {gravi} Thermo: {therm} Chem: {chem} Electro: {elec} Other: {other}");
 
             var itemsFileGen = new ItemsFileGenerator("gamedata\\configs\\items\\items\\items_dynart.ltx");
             itemsFileGen.Write(arts);
@@ -27,7 +54,10 @@ namespace AnomalyDynamicArtifactsGenerator
             var uIDetectorArtefactFileGen = new UIDetectorArtefactFileGenerator("gamedata\\configs\\ui\\ui_detector_artefact.xml");
             uIDetectorArtefactFileGen.Write(arts);
 
-            Console.WriteLine("Generated Artifacts: " + arts.Count());
+            var stringsFileGen = new StringsFileGenerator("gamedata\\configs\\text\\eng\\st_dynart.xml");
+            stringsFileGen.Write();
+
+            Console.WriteLine("Done generating files");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace AnomalyDynamicArtifactsGenerator
     public enum ArtifactProperty
     {
         HealthRestoreSpeed,
-        RadiationRestoreSpeed,
+        //RadiationRestoreSpeed,
         SatietyRestoreSpeed,
         PowerRestoreSpeed,
         BleedingRestoreSpeed,

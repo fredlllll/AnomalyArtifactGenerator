@@ -1,15 +1,14 @@
-﻿HealthRestoreSpeed,-0.00060, 0.00060, 5
-RadiationRestoreSpeed,-0.00060, 0.00060, 5
-SatietyRestoreSpeed,-0.1, 0.1, 3
-PowerRestoreSpeed,-0.0005, 0.0005, 3
-BleedingRestoreSpeed,-0.001, 0.001, 3
-AdditionalInventoryCarryWeight,-12, 12, 3
-BurnImmunity,-0.002,0.002,3
-StrikeImmunity,-0.002,0.002,3
-ShockImmunity,-0.002,0.002,3
-WoundImmunity,-0.002,0.002,3
-RadiationImmunity,-0.002,0.002,3
-TelepaticImmunity,-0.002,0.002,3
-ChemicalBurnImmunity,-0.002,0.002,3
-ExplosionImmunity,-0.002,0.002,3
-FireWoundImmunity,-0.002,0.002,3
+﻿HealthRestoreSpeed[], 0.000075, 0.00015, 0.0003, 0.00045
+SatietyRestoreSpeed[],-0.01, 0.01, 0.02
+PowerRestoreSpeed[],-0.002,-0.0015,-0.00075,0.00075,0.0015,0.002
+BleedingRestoreSpeed[],-0.001, 0.001, 0.005,0.01
+AdditionalInventoryCarryWeight[],-12,-6,-3,3,6, 12
+BurnImmunity[],-0.006,-0.003,0.003,0.006
+StrikeImmunity[],-0.2,-0.1,-0.05,0.05,0.1,0.2
+ShockImmunity[],-0.5,-0.25,-0.1,0.1,0.25,0.5
+WoundImmunity[],-0.25,-0.125,0.125,0.25
+RadiationImmunity[],-0.25,-0.125,0.125
+TelepaticImmunity[],-0.05,-0.025,0.025,0.05
+ChemicalBurnImmunity[],-0.001,-0.0005,0.0005, 0.001
+ExplosionImmunity[],-0.2,-0.1,0.1,0.2
+FireWoundImmunity[],-0.2,-0.1,0.1,0.2
