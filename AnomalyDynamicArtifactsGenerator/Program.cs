@@ -7,17 +7,25 @@ namespace AnomalyDynamicArtifactsGenerator
     {
         static void Main(string[] args)
         {
+            int finalAmount = 4500;
+            if (args.Length > 0)
+            {
+                finalAmount = int.Parse(args[0]);
+            }
+
+            Console.WriteLine("Generating Artifacts...");
+
             ArtifactGenerator gen = new ArtifactGenerator("PropertyStats.txt");
 
-            var arts5 = Thinners.ThinPercentage(gen.GetArtifacts(5),0.01f).ToArray();
+            var arts5 = Thinners.ThinPercentage(gen.GetArtifacts(5), 0.01f).ToArray();
             var arts4 = Thinners.ThinPercentage(gen.GetArtifacts(4), 0.1f).ToArray();
             var arts3 = gen.GetArtifacts(3).ToArray();
             var arts = arts3.Concat(arts4).Concat(arts5);
             arts = Thinners.ThinPercentageHealthRestore(arts, 0.1f); //remove 90% of artifacts with health restore as its supposed to be rare
-            arts = Thinners.ThinFixed(arts, 4500).ToArray();
+            arts = Thinners.ThinFixed(arts, finalAmount).ToArray();
 
-            int gravi=0, therm=0, chem=0, elec = 0, other=0;
-            foreach(var a in arts)
+            int gravi = 0, therm = 0, chem = 0, elec = 0, other = 0;
+            foreach (var a in arts)
             {
                 switch (a.ArtifactType)
                 {
@@ -39,7 +47,8 @@ namespace AnomalyDynamicArtifactsGenerator
                 }
             }
 
-            Console.WriteLine($"Gravi: {gravi} Thermo: {therm} Chem: {chem} Electro: {elec} Other: {other}");
+            Console.WriteLine($"Gravi: {gravi} Thermo: {therm} Chem: {chem} Electro: {elec}");
+            Console.WriteLine("Writing Files...");
 
             var itemsFileGen = new ItemsFileGenerator("gamedata\\configs\\items\\items\\items_dynart.ltx");
             itemsFileGen.Write(arts);
@@ -56,7 +65,7 @@ namespace AnomalyDynamicArtifactsGenerator
             var stringsFileGen = new StringsFileGenerator("gamedata\\configs\\text\\eng\\st_dynart.xml");
             stringsFileGen.Write();
 
-            Console.WriteLine("Done generating files");
+            Console.WriteLine("Done");
         }
     }
 }

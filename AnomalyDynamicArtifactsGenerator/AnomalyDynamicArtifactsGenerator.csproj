@@ -14,6 +14,9 @@
     <None Update="PropertyStats.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="templates\items_devices_1.ltx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
