@@ -4,6 +4,7 @@
     {
         public string spawn = "";
         public string visual = "";
-        public int inv_x=0, inv_y=0;
+        public string particles_bone = "link";
+        public int inv_x = 0, inv_y = 0;
     }
 }

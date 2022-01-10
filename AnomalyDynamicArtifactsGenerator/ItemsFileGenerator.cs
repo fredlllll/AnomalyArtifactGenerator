@@ -101,6 +101,7 @@ det_hide_particles = artefact\af_electra_hide");
             }
             targetWriter.WriteLine("af_rank=" + a.Rank);
             targetWriter.WriteLine("tier=" + (a.Rank + 1)); //tier always seems to be 1 higher, idk why there are rank and tier
+            targetWriter.WriteLine("particles_bone=" + a.Graphics.particles_bone);
             //random light
             targetWriter.WriteLine(@"lights_enabled = true
 trail_light_color = " + str((float)Util.r.NextDouble()) + "," + str((float)Util.r.NextDouble()) + "," + str((float)Util.r.NextDouble()) + @"
