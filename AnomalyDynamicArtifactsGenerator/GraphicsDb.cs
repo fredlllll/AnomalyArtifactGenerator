@@ -5,7 +5,7 @@
         public static Graphics[] graphics = new Graphics[]
         {
             new Graphics(){ spawn="\"artefacts\\artefact_itcher\"", visual= @"dynamics\artefacts\af_cell.ogf",inv_x=0,inv_y=70 },
-            new Graphics(){ spawn="\"artefacts\\artefact_pin\"", visual= @"dynamics\artefacts\af_pin.ogf",inv_x=1,inv_y=70 },
+            new Graphics(){ spawn="\"artefacts\\artefact_pin\"", visual= @"dynamics\artefacts\artefact_pin.ogf",inv_x=1,inv_y=70 },
             new Graphics(){ spawn="\"artefacts\\thermal_1_cristall\"", visual= @"dynamics\artefacts\af_cristall.ogf",inv_x=2,inv_y=70 },
             new Graphics(){ spawn="\"artefacts\\thermal_2_fireball\"", visual= @"dynamics\artefacts\af_fireball.ogf",inv_x=3,inv_y=70 },
             new Graphics(){ spawn="\"artefacts\\acidic_1_blood\"", visual= @"dynamics\artefacts\af_blood.ogf",inv_x=5,inv_y=70 },
