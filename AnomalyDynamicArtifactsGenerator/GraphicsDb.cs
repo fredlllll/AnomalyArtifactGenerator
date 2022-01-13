@@ -42,7 +42,7 @@
             new Graphics(){ spawn="\"artefacts\\artefact_death_lamp\"", visual= @"dynamics\artefacts\artefact_death_lamp.ogf" ,inv_x=20,inv_y=71},
             new Graphics(){ spawn="\"artefacts\\af_psi_field\"", visual= @"dynamics\artefacts\af_psi_field.ogf" ,inv_x=13,inv_y=74},
             new Graphics(){ spawn="\"artefacts\\af_control\"", visual= @"dynamics\artefacts\af_control.ogf",inv_x=14,inv_y=74 },
-            new Graphics(){ spawn="\"artefacts\\gravitational_1_medusa\"", visual= @"dynamics\devices\dev_bred\dev_bred.ogf",inv_x=15,inv_y=74 },
+            //new Graphics(){ spawn="\"artefacts\\gravitational_1_medusa\"", visual= @"dynamics\devices\dev_bred\dev_bred.ogf",inv_x=15,inv_y=74 },
         };
 
         public static Graphics GetRandom()
